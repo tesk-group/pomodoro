@@ -1,5 +1,6 @@
 # AgilePomodoro Backend
 ## Set Up
+```
 $ sudo apt update
 $ sudo apt install software-properties-common
 $ sudo apt install nodejs npm
@@ -12,3 +13,4 @@ $ pip install django
 $ pip install djangorestframework
 $ python -m pip install django-cors-headers
 $ django-admin startapp core
+```
