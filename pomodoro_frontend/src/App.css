@@ -5,6 +5,10 @@
   align-items: center;
   justify-content: center ;
   background-color: #FCF8E8;
+  background: url('./images/logregbg.png') no-repeat center center fixed;
+  background-size: cover;
+  height: 100%;
+  overflow: hidden;
 }
 
 .timer-wrapper {
@@ -14,27 +18,52 @@
   background-color: #94B49F;
 }
 
-.auth-form-containeer, .login-form, .register-form {
+.login-form, .register-form {
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+  border-radius: 11px;
+  background-color: #FCC0D0;
+  /* justify-content: space-between; */
+  padding: 30px;
+}
+
+.switch-form {
+  font-weight: bold;
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+  border-radius: 11px;
+  background-color: #FCC0D0;
+  /* justify-content: space-between; */
+  padding: 20px;
+}
+
+.auth-form-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   border-radius: 11px;
-  background-color: #FCC0D0;
-  height: 300%;
   justify-content: space-between;
-  padding: 20px;
 }
 
 label {
   text-align: left;
   padding: 0.25rem 0;
+  font-weight: bold;
 }
 
 input {
   margin: 0.5rem 0;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 10px;
+  background-color: #CEE5D0;
 }
 
 button {
+  margin-top: 10px;
   border: none;
   background-color: #94B49F;
   padding: 20px;

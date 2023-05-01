@@ -1,29 +1,54 @@
-import { useState } from "react"
+import { useState, useContext, Image} from "react"
+import AuthContext from "../context/AuthProvider";
+import axios from "axios";
 
 export const LogIn = (props) => {
-
+    const { setAuth } = useContext(AuthContext);
     const [email, setEmail] = useState('');
-    const [pass, setPass] = useState('');
+    const [password, setPass] = useState('');
+    const [token, setToken] = useState('');
+
+    const state = {
+        details: [],
+        email: "",
+        password: "",
+        token: "",
+    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(email);
-    }
+        const user = { email, password};
+
+        console.log(fetch('/api/users/login', {
+            method: 'POST',
+            headers: { "Content-Type": "application/json", "Accept": "application/json"},
+            body: JSON.stringify(user)
+        }).then(() => {
+            console.log('New User Registered')
+        })); 
+    };
+
+    const handleInput = (e) => {
+        this.setState({
+            [e.target.name]: e.target.value,
+        });
+    };
+    
 
     return (
         <div className="auth-form-container">
             <form className="register-form" onSubmit={handleSubmit}>
-                <label class="in-form" for  ="email">Email Address</label>
-                <input value={email} onChange={(e) => setEmail(e.target.value)} type="email" placeholder="Enter email here" />
+                <label class="in-form" for="email">Email Address</label>
+                <input value={email} onChange={(e) => setEmail(e.target.value)} type="email" placeholder="Enter email address" />
                 <label class="in-form" for="password">Password</label>
-                <input value={pass} onChange={(e) => setPass(e.target.value)} type="password" placeholder="**************" />
+                <input value={password} onChange={(e) => setPass(e.target.value)} type="password" placeholder="**************" />
                 <button>Log In</button>
+                <p> TESTING HOST CHANGES</p>
             </form>
-            <p>Forgot Password?</p>
-            <button>Reset Password</button>
-
-            <p>Don't Have An Account?</p>
-            <button onClick={() => props.onFormSwitch('register')}>Register</button>
+            <div className="switch-form">
+                <p>Don't Have An Account?</p>
+                <button onClick={() => props.onFormSwitch('register')}>Register</button>
+            </div>
         </div>
 
     )
