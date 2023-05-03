@@ -6,7 +6,7 @@ export const UserMenu = () => {
 
     const logOut = (ev) => {
         ev.preventDefault();
-        try { fetch('http://localhost:8000/api/users/logout', {
+        try { fetch('/api/users/logout', {
             method: 'GET',
             headers: { "Content-Type": "application/json", "Accept": "application/json", 'X-CSRF-TOKEN': "{{ csrf_token() }}", "Authorization": `Bearer ${localStorage.getItem('TOKEN')}`},
         })}

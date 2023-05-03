@@ -12,7 +12,7 @@ export const Sidebar = () => {
     const logOut = (ev) => {
         ev.preventDefault();
         console.log("hmm");
-        try { fetch('http://localhost:8000/api/users/logout', {
+        try { fetch('/api/users/logout', {
             method: 'GET',
             headers: { "Content-Type": "application/json", "Accept": "application/json", 'X-CSRF-TOKEN': "{{ csrf_token() }}", "Authorization": `Bearer ${localStorage.getItem('TOKEN')}`},
         })}
@@ -24,7 +24,7 @@ export const Sidebar = () => {
     };
 
     const connectTrello = () => {
-        try {fetch('http://localhost:8000/a/api/oauth/trello/endpoint', {
+        try {fetch('/api/oauth/trello/endpoint', {
             method: 'GET',
             headers: { "Content-Type": "application/json", "Accept": "application/json", 'X-CSRF-TOKEN': "{{ csrf_token() }}", "Authorization": `Bearer ${localStorage.getItem('TOKEN')}`},
         })}
@@ -35,7 +35,7 @@ export const Sidebar = () => {
     return(
         <div>
             <Menu>
-                <CardUploader />
+            localh                <CardUploader />
             </Menu>
         </div>
     )

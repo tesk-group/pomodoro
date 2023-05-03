@@ -44,7 +44,7 @@ export default function Pomodoro() {
           //API Call here
           setDuration(240);
           const newTimer = {pomodoroDuration, taskType, taskID};
-          try { fetch('http://localhost:8000/api/timers/', {
+          try { fetch('/api/timers/', {
             method: 'POST',
             headers: { "Content-Type": "application/json", "Accept": "application/json", 'X-CSRF-TOKEN': "{{ csrf_token() }}", "Authorization": `Bearer ${localStorage.getItem('TOKEN')}`},
             body: JSON.stringify(newTimer)
@@ -75,7 +75,7 @@ export default function Pomodoro() {
       const reason = prompt("Why are you pausing the countdown?");
       setPauseReason(reason);
 
-      try { fetch('http://localhost:8000/api/timers/', {
+      try { fetch('/api/timers/', {
             method: 'PUT',
             headers: { "Content-Type": "application/json", "Accept": "application/json", 'X-CSRF-TOKEN': "{{ csrf_token() }}", "Authorization": `Bearer ${localStorage.getItem('TOKEN')}`},
             body: JSON.stringify(pauseReason)
@@ -91,7 +91,7 @@ export default function Pomodoro() {
       setIsPaused(!isPaused);
       if (!isPaused) {
         setPauseReason("");
-        try { fetch('http://localhost:8000/api/timers/', {
+        try { fetch('/api/timers/', {
             method: 'PUT',
             headers: { "Content-Type": "application/json", "Accept": "application/json", 'X-CSRF-TOKEN': "{{ csrf_token() }}", "Authorization": `Bearer ${localStorage.getItem('TOKEN')}`},
           }).then(response => response.json()).then(data => {
