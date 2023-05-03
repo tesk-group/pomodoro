@@ -11,7 +11,7 @@ export const LogIn = (props) => {
         e.preventDefault();
         const user = { email, password};
 
-        try { fetch('http://localhost:8000/api/users/login', {
+        try { fetch('/api/users/login', {
             method: 'POST',
             headers: { "Content-Type": "application/json", "Accept": "application/json"},
             body: JSON.stringify(user)
@@ -26,14 +26,7 @@ export const LogIn = (props) => {
         }
         
     } 
-
-    const handleInput = (e) => {
-        this.setState({
-            [e.target.name]: e.target.value,
-        });
-    };
     
-
     return (
         <div className="auth-form-container">
             <form className="login-form" onSubmit={handleSubmit}>

@@ -1,7 +1,7 @@
 import { slide as Menu } from 'react-burger-menu';
 import './Sidebar.css';
 import { useStateContext } from "../context/ContextProvider";
-import axiosClient from '../axios';
+import CardUploader from './TrelloParser';
 
 
 export const Sidebar = () => { 
@@ -12,7 +12,7 @@ export const Sidebar = () => {
     const logOut = (ev) => {
         ev.preventDefault();
         console.log("hmm");
-        try { fetch('http://localhost:8000/api/users/logout', {
+        try { fetch('/api/users/logout', {
             method: 'GET',
             headers: { "Content-Type": "application/json", "Accept": "application/json", 'X-CSRF-TOKEN': "{{ csrf_token() }}", "Authorization": `Bearer ${localStorage.getItem('TOKEN')}`},
         })}
@@ -23,13 +23,19 @@ export const Sidebar = () => {
         setToken(null);
     };
 
+    const connectTrello = () => {
+        try {fetch('/api/oauth/trello/endpoint', {
+            method: 'GET',
+            headers: { "Content-Type": "application/json", "Accept": "application/json", 'X-CSRF-TOKEN': "{{ csrf_token() }}", "Authorization": `Bearer ${localStorage.getItem('TOKEN')}`},
+        })}
+        catch(error) {
+            console.log(error);
+        }
+    }
     return(
         <div>
             <Menu>
-                <button onClick={logOut}>Hmm</button>
-                <a id="about" className="menu-item" href="/about">About</a>
-                <a id="contact" className="menu-item" href="/contact">Contact</a>
-                <a className="menu-item--small" href="">Settings</a>
+            localh                <CardUploader />
             </Menu>
         </div>
     )
