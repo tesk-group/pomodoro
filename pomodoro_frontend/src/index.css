@@ -8,6 +8,7 @@
   background-size: cover;
   height: 100%;
   overflow: hidden;
+  position: relative;
 }
 /* 
 .timer-wrapper {
@@ -90,4 +91,72 @@ button {
 #page-wrap {
   padding-bottom: 10px;
   padding-top: 10px;
+}
+
+.side-bar {
+position: absolute;
+z-index: 0;
+}
+
+.user-menu {
+position: absolute;
+z-index: 1;
+top: 0.8vh;
+right: 0.8vh;
+margin-top: 0;
+filter: drop-shadow(0px 5px 4px black);
+}
+
+.timer_text {
+  padding-top: 30px;
+  font-weight: bold;
+  font-size: 2em;
+}
+
+
+.timer {
+  padding: 30px;
+  background-color: #94B49F;
+  position: relative;
+  z-index: 4;
+  border-radius: 50%;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  width: 40vh;
+  height: 40vh;
+  top: 30vh;
+  left: 72vh;
+  filter: drop-shadow(0px 5px 4px black);
+}
+  
+.play {
+  width: 15vh;
+  height: 15vh;
+  z-index: 4;
+  position: relative;
+  align-self: auto;
+}
+
+.cards {
+  background-color: #FCF8E8;
+  margin-top: 20px;
+  display: block;
+  width: 100%;
+}
+
+.card_name {
+  color: black;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bolder;
+}
+
+.card_id {
+  color: black;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+}
+
+.active {
+  background-color: #94B49F;
 }

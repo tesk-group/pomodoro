@@ -28,7 +28,7 @@ export const ContextProvider = ( { children } ) => {
                 setToken,
             }}
         >
-            {children};
+            {children}
         </StateContext.Provider>
     )
 }

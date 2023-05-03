@@ -2,6 +2,18 @@ import { Navigate, Outlet } from "react-router-dom";
 import { Sidebar } from '../components/Sidebar';
 import axiosClient from "../axios"; 
 import { useStateContext } from "../context/ContextProvider";
+import { UserMenu } from "../components/UserDropdown";
+import { Children, createContext, useContext, useState } from "react";
+import Pomodoro from "../components/Pomodoro"; 
+
+const StateContext = createContext({
+    pomodoroDuration: null,
+    taskID: null,
+    pomodoroType: null,
+    setDuration: () => {},
+    setID: () => {},
+    setType: () => {},
+})
 
 const navigation = [
     { name: "Dashboard", to: "/" },
@@ -9,8 +21,11 @@ const navigation = [
 ]
 
 export default function MemberLayout() {
+    const [pomodoroDuration, setDuration] = useState({});
+    const [taskID, setID] = useState();
+    const [pomodoroType, setType] = useState({});
+    const { pomo, userToken, setUser, setToken } = useStateContext();
 
-    const { currentUser, userToken, setUser, setToken } = useStateContext();
 
     console.log(userToken);
     console.log("hi" + userToken);
@@ -20,27 +35,14 @@ export default function MemberLayout() {
         return <Navigate to="/login" />
     }
 
-    const logOut = (ev) => {
-        ev.preventDefault();
-        axiosClient.post("/logout").then((res) => {
-            setUser({});
-            setToken(null);
-            try { fetch('http://localhost:8000/api/users/', {
-                method: 'GET',
-                headers: { "Content-Type": "application/json", "Accept": "application/json", 'X-CSRF-TOKEN': "{{ csrf_token() }}", "Authorization": `Bearer ${localStorage.getItem('TOKEN')}`},
-            })}
-            catch(error) {
-                console.log(error);
-            }
-        });
-    }
-
     return (
         <div> 
+            <UserMenu />    
             <div className="App" id="outer-container">
-            <Sidebar pageWrapId={'page-wrap'} outerContainerId={'outer-container'} />
-            <div id="page-wrap">
+                <Sidebar pageWrapId={'page-wrap'} outerContainerId={'outer-container'} className="side-bar" />
+                <div id="page-wrap">
             </div>
+            <Pomodoro />
         </div>
             <Outlet />
         </div>

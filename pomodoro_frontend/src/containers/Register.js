@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { useStateContext } from '../context/ContextProvider';
 
 export const Register = (props) => {
@@ -14,14 +14,13 @@ export const Register = (props) => {
         e.preventDefault();
         const newUser = {username, email, password, password_confirmation};
 
-        try { fetch('http://localhost:8000/api/users/', {
+        try { fetch('/api/users/', {
             method: 'POST',
             headers: { "Content-Type": "application/json", "Accept": "application/json", 'X-CSRF-TOKEN': "{{ csrf_token() }}"},
             body: JSON.stringify(newUser)
         }).then(response => response.json()).then(data => {
-            setToken(data.token);
-            setUser(data.email);
-            console.log(data);
+            console.log("happy happy happy");
+            return <Navigate to="/login" />;
         })}
         catch(error) {
             console.log(error);

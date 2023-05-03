@@ -26,14 +26,7 @@ export const LogIn = (props) => {
         }
         
     } 
-
-    const handleInput = (e) => {
-        this.setState({
-            [e.target.name]: e.target.value,
-        });
-    };
     
-
     return (
         <div className="auth-form-container">
             <form className="login-form" onSubmit={handleSubmit}>
