@@ -1,7 +1,10 @@
 import { useState } from "react"
+import { Link } from "react-router-dom";
+import { useStateContext } from '../context/ContextProvider';
 
 export const Register = (props) => {
 
+    const { setToken, setUser } = useStateContext();
     const [email, setEmail] = useState('');
     const [password, setPass] = useState('');
     const [password_confirmation, setConfirm] = useState('');
@@ -9,15 +12,20 @@ export const Register = (props) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const newUser = { email, username, password, password_confirmation};
+        const newUser = {username, email, password, password_confirmation};
 
-        console.log(fetch('/api/users', {
+        try { fetch('http://localhost:8000/api/users/', {
             method: 'POST',
-            headers: { "Content-Type": "application/json", "Accept": "application/json"},
+            headers: { "Content-Type": "application/json", "Accept": "application/json", 'X-CSRF-TOKEN': "{{ csrf_token() }}"},
             body: JSON.stringify(newUser)
-        }).then(() => {
-            console.log('New User Registered')
-        }));
+        }).then(response => response.json()).then(data => {
+            setToken(data.token);
+            setUser(data.email);
+            console.log(data);
+        })}
+        catch(error) {
+            console.log(error);
+        }
     }
 
     return (
@@ -35,7 +43,11 @@ export const Register = (props) => {
             </form> 
             <div className="switch-form">
                 <p>Already Have An Account?</p>
-                <button onClick={() => props.onFormSwitch('login')}>Log In </button>
+                <Link to="/login">
+                    <button>
+                        Log In
+                    </button>
+                </Link>
             </div>
         </div>
 
