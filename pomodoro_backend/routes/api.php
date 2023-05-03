@@ -40,3 +40,8 @@ Route::middleware(['auth:sanctum', App\Http\Middleware\FinishTimers::class])->pr
     Route::get('/', [App\Http\Controllers\StatisticsController::class, 'get']);
     Route::get('/tasks/{task}', [App\Http\Controllers\StatisticsController::class, 'getForTask']);
 });
+
+Route::middleware(['auth:sanctum', App\Http\Middleware\FinishTimers::class])->prefix('/distractions')->group(function() {
+    Route::get('/', [App\Http\Controllers\DistractionController::class, 'index']);
+    Route::get('/tasks/{task}', [App\Http\Controllers\DistractionController::class, 'getForTask']);
+});

@@ -19,13 +19,16 @@ class UserService
         return $user;
     }
 
-    public function login(string $email, string $password) : ?string
+    public function login(string $email, string $password) : ?array
     {
         if (Auth::attempt(['email' => $email, 'password' => $password])) {
             $user = Auth::user();
             $token = $user->createToken('authToken', ['*'], now()->addMinutes(60))->plainTextToken;
 
-            return $token;
+            return [
+                'token' => $token,
+                'username' => $user->username
+            ];
         }
 
         return null;

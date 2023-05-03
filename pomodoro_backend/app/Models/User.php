@@ -54,4 +54,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(UserAuth::class);
     }
+
+    public function distractions()
+    {
+        return $this->hasMany(Distraction::class);
+    }
 }
