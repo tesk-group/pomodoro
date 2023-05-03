@@ -42,10 +42,8 @@ class UserController extends Controller
             ], 400);
         }
 
-        if ($token = $userService->login($request->email, $request->password)) {
-            return response()->json([
-                'token' => $token
-            ], 200);
+        if ($signInData = $userService->login($request->email, $request->password)) {
+            return response()->json($signInData, 200);
         }
 
         return response()->json([

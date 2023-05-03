@@ -33,4 +33,9 @@ class Task extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function timers()
+    {
+        return $this->hasMany(Timer::class);
+    }
 }

@@ -49,6 +49,11 @@ class Timer extends Model
         return $this->hasMany(Distraction::class);
     }
 
+    public function task()
+    {
+        return $this->belongsTo(Task::class);
+    }
+
     public function getStatusAttribute($value)
     {
         if ($value === 'active' && now()->isAfter($this->end_time)) {
