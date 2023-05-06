@@ -1,13 +1,162 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+:root {
+  text-align: center;
+  min-height: 100vh;
+  align-items: center;
+  justify-content: center ;
+  background-color: #FCF8E8;
+  background: url('images/logregbg.png') no-repeat center center fixed;
+  background-size: cover;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+}
+/* 
+.timer-wrapper {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  background-color: #94B49F;
+} */
+
+.login-form, .register-form {
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+  border-radius: 11px;
+  background-color: #FCC0D0;
+  /* justify-content: space-between; */
+  padding: 30px;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.switch-form {
+  font-weight: bold;
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+  border-radius: 11px;
+  background-color: #FCC0D0;
+  /* justify-content: space-between; */
+  padding: 20px;
+}
+
+.guest-flex {
+  padding: 20vh 0;
+}
+
+.auth-form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 11px;
+  justify-content: space-between;
+}
+
+label {
+  text-align: left;
+  padding: 0.25rem 0;
+  font-weight: bold;
+}
+
+input {
+  margin: 0.5rem 0;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 10px;
+  background-color: #CEE5D0;
+}
+
+body {
+  margin: 0px;
+}
+
+button {
+  margin-top: 10px;
+  border: none;
+  background-color: #94B49F;
+  padding: 20px;
+  border-radius: 11px;
+}
+
+.link-btn {
+  background: none;
+  color: aqua;
+  text-decoration: underline;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+#page-wrap {
+  padding-bottom: 10px;
+  padding-top: 10px;
+}
+
+.side-bar {
+position: absolute;
+z-index: 0;
+}
+
+.user-menu {
+position: absolute;
+z-index: 1;
+top: 0.8vh;
+right: 0.8vh;
+margin-top: 0;
+filter: drop-shadow(0px 5px 4px black);
+}
+
+.timer_text {
+  padding-top: 30px;
+  font-weight: bold;
+  font-size: 2em;
+}
+
+
+.timer {
+  padding: 30px;
+  background-color: #94B49F;
+  position: relative;
+  z-index: 4;
+  border-radius: 50%;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  width: 40vh;
+  height: 40vh;
+  top: 30vh;
+  left: 72vh;
+  filter: drop-shadow(0px 5px 4px black);
+}
+  
+.play {
+  width: 15vh;
+  height: 15vh;
+  z-index: 4;
+  position: relative;
+  align-self: auto;
+}
+
+.cards {
+  background-color: #FCF8E8;
+  margin-top: 20px;
+  display: block;
+  width: 100%;
+}
+
+.card_name {
+  color: black;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bolder;
+}
+
+.card_id {
+  color: black;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+}
+
+.active {
+  background-color: #94B49F;
 }
