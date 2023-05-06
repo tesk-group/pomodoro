@@ -2,11 +2,12 @@ import axios from "axios";
 import router from "./router";
 
 const axiosClient = axios.create({
-    baseURL: '/',
+    baseURL: process.env.REACT_APP_BASE_URL,
 });
 
 axiosClient.interceptors.request.use((config) => {
     config.headers.Authorization = `Bearer ${localStorage.getItem('TOKEN')}`;
+    config.headers.Accept = 'application/json';
     return config;
 });
 
