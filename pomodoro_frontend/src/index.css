@@ -1,22 +1,15 @@
 :root {
   text-align: center;
+  display: flex;
   min-height: 100vh;
   align-items: center;
   justify-content: center ;
-  background-color: #FCF8E8;
-  background: url('images/logregbg.png') no-repeat center center fixed;
+  background: url('images/logregbg.png') no-repeat center center fixed #FCF8E8;
   background-size: cover;
   height: 100%;
   overflow: hidden;
   position: relative;
 }
-/* 
-.timer-wrapper {
-  width: 180px;
-  height: 180px;
-  border-radius: 50%;
-  background-color: #94B49F;
-} */
 
 .login-form, .register-form {
   display: flex;
@@ -107,37 +100,6 @@ margin-top: 0;
 filter: drop-shadow(0px 5px 4px black);
 }
 
-.timer_text {
-  padding-top: 30px;
-  font-weight: bold;
-  font-size: 2em;
-}
-
-
-.timer {
-  padding: 30px;
-  background-color: #94B49F;
-  position: relative;
-  z-index: 4;
-  border-radius: 50%;
-  text-align: center;
-  justify-content: center;
-  align-items: center;
-  width: 40vh;
-  height: 40vh;
-  top: 30vh;
-  left: 72vh;
-  filter: drop-shadow(0px 5px 4px black);
-}
-  
-.play {
-  width: 15vh;
-  height: 15vh;
-  z-index: 4;
-  position: relative;
-  align-self: auto;
-}
-
 .cards {
   background-color: #FCF8E8;
   margin-top: 20px;
@@ -159,4 +121,95 @@ filter: drop-shadow(0px 5px 4px black);
 
 .active {
   background-color: #94B49F;
+}
+
+.guest-flex {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.timer_buttons button {
+  background-color: #FCF8E8;
+  margin-top: 20px;
+  margin-right: 20px;
+  display: block;
+  width: 150%;
+  background-color:#CEE5D0
+}
+
+.timer_buttons .active {
+  background-color: #94B49F
+}
+.pomodoro {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+
+.timer_buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 60%;
+}
+
+.timer_time {
+  font-size: 4rem;
+  font-weight: bold;
+  text-align: center;
+  margin: 0 2rem;
+}
+
+
+.timer_text {
+  padding-top: 30px;
+  font-weight: bold;
+  font-size: 2em;
+}
+
+
+.timer_play {
+  padding: 30px;
+  background-color: #94B49F;
+  z-index: 4;
+  border-radius: 50%;
+  text-align: center;
+  width: 50vh;
+  height: 50vh;
+  align-self: center;
+  filter: drop-shadow(0px 5px 4px black);
+  position: relative;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-direction: column;
+}
+  
+.timer_pause {
+  padding: 30px;
+  background-color:#CEE5D0;
+  z-index: 4;
+  border-radius: 50%;
+  text-align: center;
+  width: 50vh;
+  height: 50vh;
+  align-self: center;
+  filter: drop-shadow(0px 5px 4px black);
+  position: relative;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-direction: column;
+}
+
+.play {
+  width: 15vh;
+  height: 15vh;
+  z-index: 4;
+  position: relative;
+  align-self: auto;
 }

@@ -27,7 +27,8 @@ class UserService
 
             return [
                 'token' => $token,
-                'username' => $user->username
+                'username' => $user->username,
+                'linked_providers' => $this->getLinkedProviders()
             ];
         }
 
@@ -37,5 +38,37 @@ class UserService
     public function logout()
     {
         Auth::user()->tokens()->delete();
+    }
+
+    public function getUserData(): ?Array
+    {
+        $user = Auth::user();
+
+        if ($user) {
+            return [
+                'username' => $user->username,
+                'linked_providers' => $this->getLinkedProviders()
+            ];
+        }
+
+        return null;
+    }
+
+    public function getLinkedProviders(): Array
+    {
+        $user = Auth::user();
+        $linkedServices = [];
+
+        if ($user) {
+            $userAuthentications = $user->userAuths()->get();
+            
+            foreach ($userAuthentications as $userAuth) {
+                $linkedServices[] = $userAuth->provider;
+            }
+
+            $linkedServices = array_unique($linkedServices);
+        }
+
+        return $linkedServices;
     }
 }

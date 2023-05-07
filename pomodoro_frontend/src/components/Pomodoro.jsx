@@ -1,15 +1,15 @@
 import { useState, useEffect } from "react";
-import { FontAwesomeIcon} from "@fortawesome/react-fontawesome"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlay, faPause } from "@fortawesome/free-solid-svg-icons";
 
-export default function Pomodoro() {
-  const [minutes, setMinutes] = useState(3);
+export function Pomodoro(taskID) {
+  const [minutes, setMinutes] = useState(25);
   const [seconds, setSeconds] = useState(0);
   const [displayMessage, setDisplayMessage] = useState(false);
   const [isPaused, setIsPaused] = useState(true);
   const [pauseReason, setPauseReason] = useState("");
-  const [taskID, setID] = useState();
   const [taskType, setTaskType] = useState("task");
-  const [pomodoroDuration, setDuration] = useState(240);
+  const [pomodoroDuration, setDuration] = useState(1500);
 
   useEffect(() => {
     let interval = null;
@@ -23,13 +23,13 @@ export default function Pomodoro() {
             setSeconds(59);
             setMinutes(minutes - 1);
           } else {
-            let minutes = displayMessage ? 4 : 2;
+            let minutes = displayMessage ? 50 : 5;
             let seconds = 0;
 
             setSeconds(seconds);
             setMinutes(minutes);
             setDisplayMessage(!displayMessage);
-            if (minutes == 4) {
+            if (minutes === 50) {
               setIsPaused(true);
             }
           }
@@ -40,25 +40,15 @@ export default function Pomodoro() {
 
       if (minutes === 0 && seconds === 0) {
         console.log("Countdown complete!");
-        if (taskType == "task") {
+        if (taskType === "task") {
           //API Call here
-          setDuration(240);
-          const newTimer = {pomodoroDuration, taskType, taskID};
-          try { fetch('/api/timers/', {
-            method: 'POST',
-            headers: { "Content-Type": "application/json", "Accept": "application/json", 'X-CSRF-TOKEN': "{{ csrf_token() }}", "Authorization": `Bearer ${localStorage.getItem('TOKEN')}`},
-            body: JSON.stringify(newTimer)
-          }).then(response => response.json()).then(data => {
-              console.log("happy happy happy");
-          })}
-          catch(error) {
-              console.log(error);
-          }
+          setDuration(1500);
+          const newTimer = { pomodoroDuration, taskType, taskID };
           setTaskType("break");
         } else {
           setTaskType("task");
         }
-        setPauseReason({});
+        setPauseReason("");
       }
     }
 
@@ -72,48 +62,51 @@ export default function Pomodoro() {
     console.log(taskID);
     if (!isPaused && minutes !== 0 && seconds !== 0) {
       setIsPaused(true);
-      const reason = prompt("Why are you pausing the countdown?");
+      const reason = prompt("Why are you pausing the Pomodoro?");
       setPauseReason(reason);
-
-      try { fetch('/api/timers/', {
-            method: 'PUT',
-            headers: { "Content-Type": "application/json", "Accept": "application/json", 'X-CSRF-TOKEN': "{{ csrf_token() }}", "Authorization": `Bearer ${localStorage.getItem('TOKEN')}`},
-            body: JSON.stringify(pauseReason)
-          }).then(response => response.json()).then(data => {
-              if (data != {}) {
-                console.log("happy happy happy");
-          }})}
-          catch(error) {
-              console.log(error);
-          }
-
     } else {
       setIsPaused(!isPaused);
       if (!isPaused) {
         setPauseReason("");
-        try { fetch('/api/timers/', {
-            method: 'PUT',
-            headers: { "Content-Type": "application/json", "Accept": "application/json", 'X-CSRF-TOKEN': "{{ csrf_token() }}", "Authorization": `Bearer ${localStorage.getItem('TOKEN')}`},
-          }).then(response => response.json()).then(data => {
-                console.log("happy happy happy");
-          })}
-          catch(error) {
-              console.log(error);
-          }
       }
     }
-  }
+  };
+
+  const handle25Click = () => {
+    setMinutes(25);
+    setSeconds(0);
+    setDisplayMessage(false);
+    setIsPaused(true);
+    setTaskType("task");
+    setDuration(1500);
+  };
+
+  const handle50Click = () => {
+    setMinutes(50);
+    setSeconds(0);
+    setDisplayMessage(false);
+    setIsPaused(true);
+    setTaskType("task");
+    setDuration(3000);
+  };
 
   return (
     <div className="pomodoro">
-      <div className="message">
-        {displayMessage && <div>Break time! New session starts in:</div>}
-      </div>
-      <div className="timer">
-        <img src={isPaused ? "https://www.freepnglogos.com/uploads/play-button-png/circular-play-button-svg-png-icon-download-onlinewebfontsm-30.png" : "https://static.vecteezy.com/system/resources/previews/009/992/357/original/pause-icon-sign-symbol-design-free-png.png"} className="play" onClick={handlePlayPauseClick} />
-        <div className="timer_text">
-          {timerMinutes}:{timerSeconds}
+      <div className={isPaused ? "timer_play" : "timer_pause"}>
+      <div className="timer_time_total"> {pomodoroDuration/60} Minute Timer</div>
+        <FontAwesomeIcon 
+          icon={isPaused ? faPlay : faPause}
+          className="play"
+          onClick={handlePlayPauseClick}
+          size="10x"
+        />
+        <div className="timer_time">
+            {timerMinutes}:{timerSeconds} 
         </div>
+      </div>
+      <div className="timer_buttons">
+          <button className={minutes === 25 ? "active" : ""} onClick={() => handle25Click()}>25 min</button>
+          <button className={minutes === 50 ? "active" : ""} onClick={() => handle50Click()}>50 min</button>
       </div>
     </div>
   );

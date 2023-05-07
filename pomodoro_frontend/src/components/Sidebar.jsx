@@ -1,42 +1,39 @@
 import { slide as Menu } from 'react-burger-menu';
 import './Sidebar.css';
 import { useStateContext } from "../context/ContextProvider";
-import CardUploader from './TrelloParser';
+import { TrelloParser } from './TrelloParser';
+import { Navigate, useNavigate } from "react-router-dom";
+import axios from "../axios";
+import { useState } from 'react';
 
+export function Sidebar(props) { 
 
-export const Sidebar = () => { 
+  const { currentUser, userToken, setUser, setToken } = useStateContext();
+  const [taskID, setID] = useState();
 
-    const { currentUser, userToken, setUser, setToken } = useStateContext();
-
-
-    const logOut = (ev) => {
-        ev.preventDefault();
-        console.log("hmm");
-        try { fetch('/api/users/logout', {
-            method: 'GET',
-            headers: { "Content-Type": "application/json", "Accept": "application/json", 'X-CSRF-TOKEN': "{{ csrf_token() }}", "Authorization": `Bearer ${localStorage.getItem('TOKEN')}`},
-        })}
-        catch(error) {
-            console.log(error);
+  const connectTrello = () => {
+    axios.get('/api/oauth/trello/endpoint')
+    .then(response => response.json()).then(data => {
+      console.log(data);
+    })
+      .catch(function (error) {
+        let response = error.response.data;
+        let errorMessage = response.errors;
+      
+        if (typeof errorMessage !== 'string') {
+          errorMessage = response.errors[Object.keys(response.errors)[0]];
         }
-        setUser({});
-        setToken(null);
-    };
+      
+        alert(errorMessage);
+      });
+  }
 
-    const connectTrello = () => {
-        try {fetch('/api/oauth/trello/endpoint', {
-            method: 'GET',
-            headers: { "Content-Type": "application/json", "Accept": "application/json", 'X-CSRF-TOKEN': "{{ csrf_token() }}", "Authorization": `Bearer ${localStorage.getItem('TOKEN')}`},
-        })}
-        catch(error) {
-            console.log(error);
-        }
-    }
-    return(
-        <div>
-            <Menu>
-            localh                <CardUploader />
-            </Menu>
-        </div>
-    )
+  return(
+    <div>
+      <Menu>
+        <button onClick={connectTrello}> Connect Trello </button>
+        <TrelloParser updateTaskID={props.updateTaskID}/>
+      </Menu>
+    </div>
+  )
 }
