@@ -57,4 +57,13 @@ class UserController extends Controller
 
         return response('', 200);
     }
+
+    public function getUserData(UserService $userService)
+    {
+        if ($userData = $userService->getUserData()) {
+            return response()->json($userData);
+        }
+
+        return response('', 400);
+    }
 }
