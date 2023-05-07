@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { FontAwesomeIcon} from "@fortawesome/react-fontawesome"
 
+import axios from "../axios";
+
 export default function Pomodoro() {
   const [minutes, setMinutes] = useState(3);
   const [seconds, setSeconds] = useState(0);
@@ -44,21 +46,24 @@ export default function Pomodoro() {
           //API Call here
           setDuration(240);
           const newTimer = {pomodoroDuration, taskType, taskID};
-          try { fetch('/api/timers/', {
-            method: 'POST',
-            headers: { "Content-Type": "application/json", "Accept": "application/json", 'X-CSRF-TOKEN': "{{ csrf_token() }}", "Authorization": `Bearer ${localStorage.getItem('TOKEN')}`},
-            body: JSON.stringify(newTimer)
-          }).then(response => response.json()).then(data => {
+          axios.post('/api/timers/', newTimer)
+            .then(response => response.json()).then(data => {
               console.log("happy happy happy");
-          })}
-          catch(error) {
-              console.log(error);
-          }
+            })
+            .catch(function (error) {
+              let response = error.response.data;
+              let errorMessage = response.errors;
+              
+              if (typeof errorMessage !== 'string') {
+                errorMessage = response.errors[Object.keys(response.errors)[0]];
+              }
+              
+              alert(errorMessage);
+            });
           setTaskType("break");
         } else {
           setTaskType("task");
         }
-        setPauseReason({});
       }
     }
 
@@ -73,33 +78,42 @@ export default function Pomodoro() {
     if (!isPaused && minutes !== 0 && seconds !== 0) {
       setIsPaused(true);
       const reason = prompt("Why are you pausing the countdown?");
-      setPauseReason(reason);
 
-      try { fetch('/api/timers/', {
-            method: 'PUT',
-            headers: { "Content-Type": "application/json", "Accept": "application/json", 'X-CSRF-TOKEN': "{{ csrf_token() }}", "Authorization": `Bearer ${localStorage.getItem('TOKEN')}`},
-            body: JSON.stringify(pauseReason)
-          }).then(response => response.json()).then(data => {
-              if (data != {}) {
-                console.log("happy happy happy");
-          }})}
-          catch(error) {
-              console.log(error);
+      axios.put('/api/timers/interrupt', {
+        reason: reason
+        })
+        .then(response => response.data).then(data => {
+          if (data != {}) {
+            console.log("happy happy happy");
           }
-
+        })
+        .catch(function (error) {
+          let response = error.response.data;
+          let errorMessage = response.errors;
+        
+          if (typeof errorMessage !== 'string') {
+            errorMessage = response.errors[Object.keys(response.errors)[0]];
+          }
+        
+          alert(errorMessage);
+        });
     } else {
       setIsPaused(!isPaused);
       if (!isPaused) {
-        setPauseReason("");
-        try { fetch('/api/timers/', {
-            method: 'PUT',
-            headers: { "Content-Type": "application/json", "Accept": "application/json", 'X-CSRF-TOKEN': "{{ csrf_token() }}", "Authorization": `Bearer ${localStorage.getItem('TOKEN')}`},
-          }).then(response => response.json()).then(data => {
-                console.log("happy happy happy");
-          })}
-          catch(error) {
-              console.log(error);
-          }
+        axios.put('/api/timers/resume')
+          .then(response => response.data).then(data => {
+            console.log("happy happy happy");
+          })
+          .catch(function (error) {
+            let response = error.response.data;
+            let errorMessage = response.errors;
+          
+            if (typeof errorMessage !== 'string') {
+              errorMessage = response.errors[Object.keys(response.errors)[0]];
+            }
+          
+            alert(errorMessage);
+          });
       }
     }
   }

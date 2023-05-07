@@ -1,23 +1,29 @@
 import { useStateContext } from "../context/ContextProvider";
 
+import axios from "../axios";
+
 export const UserMenu = () => { 
 
-    const { currentUser, userToken, setUser, setToken } = useStateContext();
+  const { currentUser, userToken, setUser, setToken } = useStateContext();
 
-    const logOut = (ev) => {
-        ev.preventDefault();
-        try { fetch('/api/users/logout', {
-            method: 'GET',
-            headers: { "Content-Type": "application/json", "Accept": "application/json", 'X-CSRF-TOKEN': "{{ csrf_token() }}", "Authorization": `Bearer ${localStorage.getItem('TOKEN')}`},
-        })}
-        catch(error) {
-            console.log(error);
+  const logOut = (ev) => {
+    ev.preventDefault();
+    axios.get('/api/users/logout')
+      .catch(function (error) {
+        let response = error.response.data;
+        let errorMessage = response.errors;
+          
+        if (typeof errorMessage !== 'string') {
+          errorMessage = response.errors[Object.keys(response.errors)[0]];
         }
-        setUser({});
-        setToken(null);
-    };
+          
+        alert(errorMessage);
+      });
+      setUser({});
+      setToken(null);
+  };
 
-    return(
-        <button onClick={logOut} className="user-menu">Log Out</button>
-    )
+  return(
+    <button onClick={logOut} className="user-menu">Log Out</button>
+  )
 }
