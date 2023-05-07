@@ -1,71 +1,41 @@
 import { useState, useEffect } from "react";
+import axios from "../axios";
 
-export default function CardUploader() {
+export function TrelloParser(props) {
   const [cards, setCards] = useState([]);
   const [showCards, setShowCards] = useState(false);
-  const [taskID, setID] = useState();
+  const [taskID, setTaskID] = useState(null);
 
   useEffect(() => {
-    const cardsData = JSON.parse(localStorage.getItem("cardsData"));
-    if (cardsData) {
-      setCards(cardsData);
-      setShowCards(true);
+    const fetchCards = async () => {
+      axios.get('/api/tasks/')
+        .then(response => {
+          setCards(response.data);
+          setShowCards(true);
+        })
+        .catch(function (error) {
+          console.log(error);
+          let response = error.response.data;
+          console.log(error.response);
+          let errorMessage = response.errors;
+              
+          if (typeof errorMessage !== 'string') {
+            errorMessage = response.errors[Object.keys(response.errors)[0]];
+          }
+          alert(errorMessage);
+        });
     }
+    fetchCards();
   }, []);
 
   useEffect(() => {
     localStorage.setItem("cardsData", JSON.stringify(cards));
   }, [cards]);
 
-  const handleFileUpload = (event) => {
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      const cardsData = JSON.parse(e.target.result);
-      const filteredCards = filterCards(cardsData.cards);
-      setCards(filteredCards);
-      setShowCards(true);
-    };
-    reader.readAsText(event.target.files[0]);
-  };
-
-  const generateRandomId = () => {
-    return Math.floor(Math.random() * 100000);
-  };
-
-  const filterCards = (cardsData) => {
-    const doingCards = [];
-    const doneCards = [];
-
-    let foundDoing = false;
-    let foundDone = false;
-
-    cardsData.forEach((card) => {
-      if (!foundDoing && card.name.toLowerCase().includes("doing")) {
-        foundDoing = true;
-      }
-
-      if (foundDoing && !foundDone) {
-        if (card.name.toLowerCase().includes("done")) {
-          foundDone = true;
-        } else {
-          doingCards.push({ ...card, id: generateRandomId() });
-        }
-      }
-    });
-
-    return doingCards.concat(doneCards);
-  };
-
-  const handleClearCards = () => {
-    setCards([]);
-    setShowCards(false);
-    setID(null);
-  };
-
   const handleCardClick = (id) => {
-    setID(id, () => {
-      console.log(taskID);
-    });
+    setTaskID(id);
+    props.updateTaskID(id);
+    console.log("CARD ID IS " + id)
   };
 
   const getCardClassName = (id) => {
@@ -87,11 +57,9 @@ export default function CardUploader() {
       </button>
     ));
   };
-
+  
   return (
     <div>
-      <input type="file" onChange={handleFileUpload} />
-      <button className="active" onClick={handleClearCards}>Clear Cards</button>
       {showCards && <div>{renderCards()}</div>}
     </div>
   );
