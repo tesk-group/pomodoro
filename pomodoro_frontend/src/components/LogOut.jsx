@@ -2,7 +2,7 @@ import { useStateContext } from "../context/ContextProvider";
 
 import axios from "../axios";
 
-export const UserMenu = () => { 
+export const LogOut = () => { 
 
   const { currentUser, userToken, setUser, setToken } = useStateContext();
 

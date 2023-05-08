@@ -5,6 +5,7 @@ export function TrelloParser(props) {
   const [cards, setCards] = useState([]);
   const [showCards, setShowCards] = useState(false);
   const [taskID, setTaskID] = useState(null);
+  const [taskName, setTaskName] = useState(null);
 
   useEffect(() => {
     const fetchCards = async () => {
@@ -48,11 +49,13 @@ export function TrelloParser(props) {
     localStorage.setItem("cardsData", JSON.stringify(cards));
   }, [cards]);
 
-  const handleCardClick = (id) => {
+  const handleCardClick = (id, name) => {
     setTaskID(id);
+    props.updateTaskName(name);
     props.updateTaskID(id);
     console.log("CARD ID IS " + id)
   };
+  
 
   const getCardClassName = (id) => {
     if (id === taskID) {
@@ -66,7 +69,7 @@ export function TrelloParser(props) {
       <button
         key={card.id}
         className={getCardClassName(card.id)}
-        onClick={() => handleCardClick(card.id)}
+        onClick={() => handleCardClick(card.id, card.name)}
       >
         <p className="card_name">{card.name}</p>
         <p className="card_id">ID: {card.id}</p>
