@@ -18,18 +18,24 @@
   font-style: italic;
   font-weight: 900;
   font-size: 6vh;
-  margin-bottom: 8vh;
+  margin-bottom: 4vh;
   margin-top: 2vh;
   top: 3vh;
 }
 
-.login_form, .register_form {
+.login_form {
   display: flex;
   flex-direction: column;
-  /* align-items: center; */
   border-radius: 11px;
   background-color: #FCC0D0;
-  /* justify-content: space-between; */
+  padding: 30px;
+}
+
+.register_form {
+  display: flex;
+  flex-direction: column;
+  border-radius: 11px;
+  background-color: #FCC0D0;
   padding: 30px;
 }
 
@@ -50,6 +56,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
 }
 
 .auth_form_container {
