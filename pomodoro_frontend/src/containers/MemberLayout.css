@@ -1,14 +1,14 @@
-#page-wrap {
+#page_wrap {
     padding-bottom: 10px;
     padding-top: 10px;
   }
 
-.side-bar {
+.side_bar {
   position: relative;
   z-index: 0;
 }
 
-.user-menu {
+.user_menu {
   position: relative;
   z-index: 1;
 }

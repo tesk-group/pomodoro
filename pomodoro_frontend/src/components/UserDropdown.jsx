@@ -24,6 +24,6 @@ export const UserMenu = () => {
   };
 
   return(
-    <button onClick={logOut} className="user-menu">Log Out</button>
+    <button onClick={logOut} className="user_menu">Log Out</button>
   )
 }

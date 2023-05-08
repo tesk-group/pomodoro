@@ -33,15 +33,15 @@ export const LogIn = (props) => {
   } 
     
   return (
-    <div className="auth-form-container">
-      <form className="login-form" onSubmit={handleSubmit}>
-        <label class="in-form" for="email">Email Address</label>
+    <div className="auth_form_container">
+      <form className="login_form" onSubmit={handleSubmit}>
+        <label class="in_form" for="email">Email Address</label>
         <input value={email} onChange={(e) => setEmail(e.target.value)} type="email" placeholder="Enter email address" />
-        <label class="in-form" for="password">Password</label>
+        <label class="in_form" for="password">Password</label>
         <input value={password} onChange={(e) => setPass(e.target.value)} type="password" placeholder="**************" />
         <button>Log In</button>
       </form>
-      <div className="switch-form">
+      <div className="switch_form">
         <p>Don't Have An Account?</p>
         <Link to="/register">
           <button>

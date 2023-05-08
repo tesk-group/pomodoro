@@ -1,14 +1,16 @@
 import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlay, faPause } from "@fortawesome/free-solid-svg-icons";
+import axios from "../axios";
 
-export function Pomodoro(taskID) {
+
+export function Pomodoro(props) {
   const [minutes, setMinutes] = useState(25);
   const [seconds, setSeconds] = useState(0);
   const [displayMessage, setDisplayMessage] = useState(false);
   const [isPaused, setIsPaused] = useState(true);
   const [pauseReason, setPauseReason] = useState("");
-  const [taskType, setTaskType] = useState("task");
+  const [taskType, setTaskType] = useState("pomodoro");
   const [pomodoroDuration, setDuration] = useState(1500);
 
   useEffect(() => {
@@ -40,13 +42,11 @@ export function Pomodoro(taskID) {
 
       if (minutes === 0 && seconds === 0) {
         console.log("Countdown complete!");
-        if (taskType === "task") {
-          //API Call here
+        if (taskType === "pomodoro") {
           setDuration(1500);
-          const newTimer = { pomodoroDuration, taskType, taskID };
           setTaskType("break");
         } else {
-          setTaskType("task");
+          setTaskType("pomodoro");
         }
         setPauseReason("");
       }
@@ -59,13 +59,111 @@ export function Pomodoro(taskID) {
   const timerSeconds = seconds < 10 ? `0${seconds}` : seconds;
 
   const handlePlayPauseClick = () => {
-    console.log(taskID);
+    console.log(props)
+    if (!props.taskID) {
+      alert("Please select a task from the sidebar before starting Pomodoro.");
+      return;
+    }
+    console.log(props.taskID);
     if (!isPaused && minutes !== 0 && seconds !== 0) {
       setIsPaused(true);
       const reason = prompt("Why are you pausing the Pomodoro?");
+      const intReason = { reason: reason };
+      if (!isPaused) { 
+        axios
+          .put("/api/timers/interrupt", intReason)
+          .then((response) => {
+            console.log("Timer paused" + reason);
+          })
+          .catch(function (error) {
+            console.log(error);
+            let response = error.response.data;
+            let errorMessage = response.errors;
+
+            if (typeof errorMessage !== "string") {
+              errorMessage = response.errors[Object.keys(response.errors)[0]];
+            }
+
+            alert(errorMessage);
+          });
+      }
       setPauseReason(reason);
+
+      
     } else {
       setIsPaused(!isPaused);
+      if (taskType == "pomodoro" && pomodoroDuration/60 == minutes) {
+        const newTimer = { duration: pomodoroDuration, type: taskType, task_id: props.taskID };
+        console.log(newTimer);
+        axios
+          .post("/api/timers", newTimer)
+          .then((response) => {
+            console.log("Timer Started");
+          })
+          .catch(function (error) {
+            console.log(error);
+            let response = error.response.data;
+            let errorMessage = response.errors;
+
+            if (typeof errorMessage !== "string") {
+              errorMessage = response.errors[Object.keys(response.errors)[0]];
+            }
+
+            alert(errorMessage);
+          });
+      } else if (taskType == "pomodoro" && pomodoroDuration/60 != minutes) {
+
+        axios
+          .get("/api/timers")
+          .then((response) => {
+            console.log("BEFORE RESUME" + response.data);
+          })
+          .catch(function (error) {
+            console.log(error);
+            let response = error.response.data;
+            let errorMessage = response.errors;
+
+            if (typeof errorMessage !== "string") {
+              errorMessage = response.errors[Object.keys(response.errors)[0]];
+            }
+
+            alert(errorMessage);
+          });
+
+        axios
+          .put("/api/timers/resume")
+          .then((response) => {
+            console.log("Timer Resumed");
+          })
+          .catch(function (error) {
+            console.log(error);
+            let response = error.response.data;
+            let errorMessage = response.errors;
+
+            if (typeof errorMessage !== "string") {
+              errorMessage = response.errors[Object.keys(response.errors)[0]];
+            }
+
+            alert(errorMessage);
+          });
+
+          axios
+          .get("/api/timers")
+          .then((response) => {
+            console.log("AFTER RESUME" + response.data);
+          })
+          .catch(function (error) {
+            console.log(error);
+            let response = error.response.data;
+            let errorMessage = response.errors;
+
+            if (typeof errorMessage !== "string") {
+              errorMessage = response.errors[Object.keys(response.errors)[0]];
+            }
+
+            alert(errorMessage);
+          });
+      }
       if (!isPaused) {
         setPauseReason("");
       }
@@ -77,7 +175,7 @@ export function Pomodoro(taskID) {
     setSeconds(0);
     setDisplayMessage(false);
     setIsPaused(true);
-    setTaskType("task");
+    setTaskType("pomodoro");
     setDuration(1500);
   };
 
@@ -86,7 +184,7 @@ export function Pomodoro(taskID) {
     setSeconds(0);
     setDisplayMessage(false);
     setIsPaused(true);
-    setTaskType("task");
+    setTaskType("pomodoro");
     setDuration(3000);
   };
 
