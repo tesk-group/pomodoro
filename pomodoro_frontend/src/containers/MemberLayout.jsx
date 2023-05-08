@@ -7,10 +7,8 @@ import Statistics from "./Statistics";
 import { LogOut } from "../components/LogOut";
 
 export default function MemberLayout() {
-  const [pomodoroDuration, setDuration] = useState({});
   const [taskID, setID] = useState();
-  const [pomodoroType, setType] = useState({});
-  const { pomo, userToken, setUser, setToken } = useStateContext();
+  const {userToken } = useStateContext();
   const location = useLocation();
   const [showSidebarAndPomodoro, setShowSidebarAndPomodoro] = useState(true);
   const [showStatistics, setShowStatistics] = useState(false);

@@ -1,10 +1,10 @@
 import { useStateContext } from "../context/ContextProvider";
-
+import { useState, useEffect } from "react";
 import axios from "../axios";
 
 export const LogOut = () => { 
 
-  const { currentUser, userToken, setUser, setToken } = useStateContext();
+  const [user, setUser] = useState(null);
 
   const logOut = (ev) => {
     ev.preventDefault();
@@ -19,11 +19,41 @@ export const LogOut = () => {
           
         alert(errorMessage);
       });
-      setUser({});
-      setToken(null);
+      setUser(null);
+  };
+
+  useEffect(() => {
+    isConnected().then((username) => {
+      setUser(username);
+    });
+  })
+
+  const isConnected = () => {
+    return axios
+      .get("/api/users/me")
+      .then((response) => {
+        return response.data.username;
+      })
+      .catch(function (error) {
+        console.log(error);
+        let response = error.response.data;
+        let errorMessage = response.errors;
+  
+        if (typeof errorMessage !== "string") {
+          errorMessage = response.errors[Object.keys(response.errors)[0]];
+        }
+  
+        alert(errorMessage);
+        return false;
+      });
   };
 
   return(
-    <button onClick={logOut} className="user_menu">Log Out</button>
+    <>
+      <div className="log_out">
+        {user && <p className="username"> UserName: {user}</p>}
+        <button onClick={logOut}>Log Out</button> 
+      </div>
+    </>
   )
 }

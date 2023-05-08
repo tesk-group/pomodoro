@@ -41,8 +41,8 @@ export function Pomodoro(props) {
       }, 1000);
 
       if (minutes === 0 && seconds === 0) {
-        console.log("Countdown complete!");
         if (taskType === "pomodoro") {
+          alert("Countdown Complete");
           setDuration(1500);
           setTaskType("break");
         } else {
