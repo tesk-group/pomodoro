@@ -12,9 +12,13 @@ export default function MemberLayout() {
   const location = useLocation();
   const [showSidebarAndPomodoro, setShowSidebarAndPomodoro] = useState(true);
   const [showStatistics, setShowStatistics] = useState(false);
+  const [username, setUsername] = useState(false);
   const navigate = useNavigate(); 
   const updateTaskID = (id) => {
     setID(id);
+  };
+  const updateTaskName = (name) => {
+    setUsername(name);
   };
 
   useEffect(() => {
@@ -34,6 +38,7 @@ export default function MemberLayout() {
         {showSidebarAndPomodoro && (
           <Sidebar
             updateTaskID={updateTaskID}
+            updateTaskName={updateTaskName}
             pageWrapId={"page_wrap"}
             outerContainerId={"outer_container"}
             className="side_bar"

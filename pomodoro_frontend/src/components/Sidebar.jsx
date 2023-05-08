@@ -39,7 +39,7 @@ export function Sidebar(props) {
             <button id="overall_view"> Impored Kanban Tasks </button>
           )}
         <TrelloConnect />
-        <TrelloParser updateTaskID={props.updateTaskID}/>
+        <TrelloParser updateTaskID={props.updateTaskID} updateTaskName={props.updateTaskName}/>
       </Menu>
     </div>
   )
