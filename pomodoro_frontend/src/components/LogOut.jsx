@@ -47,6 +47,11 @@ export const LogOut = () => {
         return false;
       });
   };
+  const [connected, setConnected] = useState(false);
+
+  useEffect(() => {
+    isConnected().then((isConnected) => setConnected(isConnected));
+  }, []);
 
   return(
     <>
