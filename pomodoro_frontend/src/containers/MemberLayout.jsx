@@ -1,6 +1,5 @@
-import { Navigate, Outlet, useLocation, useNavigate } from "react-router-dom";
+import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import { Sidebar } from '../components/Sidebar';
-import axiosClient from "../axios"; 
 import { useStateContext } from "../context/ContextProvider";
 import { UserMenu } from "../components/UserDropdown";
 import { Pomodoro } from "../components/Pomodoro"; 
@@ -13,6 +12,7 @@ export default function MemberLayout() {
   const [pomodoroType, setType] = useState({});
   const { pomo, userToken, setUser, setToken } = useStateContext();
   const location = useLocation();
+  const [showSidebarAndPomodoro, setShowSidebarAndPomodoro] = useState(true);
   const [showStatistics, setShowStatistics] = useState(false);
   const navigate = useNavigate(); 
   const updateTaskID = (id) => {
@@ -30,29 +30,35 @@ export default function MemberLayout() {
 
   return (
     <div>
-      <UserMenu />
-      <div className="App" id="outer-container">
-        {showStatistics ? null : (
-          <>
-            <Sidebar
-              updateTaskID={updateTaskID}
-              pageWrapId={"page-wrap"}
-              outerContainerId={"outer-container"}
-              className="side-bar"
-            />
-            <div id="page-wrap">
-              <Pomodoro taskID={taskID} />
-            </div>
-          </>
+        <p className="logo"> AgilePomodoro </p>
+        <UserMenu />
+        <div className="App" id="outer_container">
+        {showSidebarAndPomodoro && (
+          <Sidebar
+            updateTaskID={updateTaskID}
+            pageWrapId={"page_wrap"}
+            outerContainerId={"outer_container"}
+            className="side_bar"
+          />
         )}
-        <Outlet />
+        <div id="page_wrap">
+            {showSidebarAndPomodoro && <Pomodoro taskID={taskID} />}
+            {showStatistics && (
+            <div className="statistics_overlay">
+              <Statistics />
+              <button onClick={() => setShowStatistics(false)}>Close</button>
+            </div>
+          )}
+        </div>
         <button
-          onClick={() => navigate(showStatistics ? "/" : "/statistics")} 
+          onClick={() => {
+            setShowSidebarAndPomodoro(!showStatistics);
+            setShowStatistics(!showStatistics);
+          }}
         >
-          {showStatistics ? "Dashboard" : "Statistics"} 
+          {showStatistics ? "Dashboard" : "Statistics"}
         </button>
-      </div>
-      {showStatistics && <Statistics />}
+        </div>
     </div>
   );
 }

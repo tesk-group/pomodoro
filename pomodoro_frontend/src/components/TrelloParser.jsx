@@ -8,6 +8,22 @@ export function TrelloParser(props) {
 
   useEffect(() => {
     const fetchCards = async () => {
+      axios.get('/api/tasks/trello/sync')
+      .then(response => {
+          console.log("success");
+        })
+        .catch(function (error) {
+          console.log(error);
+          let response = error.response.data;
+          let errorMessage = response.errors;
+        
+          if (typeof errorMessage !== 'string') {
+            errorMessage = response.errors[Object.keys(response.errors)[0]];
+          }
+        
+          alert(errorMessage);
+        });
+
       axios.get('/api/tasks/')
         .then(response => {
           setCards(response.data);
@@ -52,7 +68,7 @@ export function TrelloParser(props) {
         className={getCardClassName(card.id)}
         onClick={() => handleCardClick(card.id)}
       >
-        <p className="card_name">Name: {card.name}</p>
+        <p className="card_name">{card.name}</p>
         <p className="card_id">ID: {card.id}</p>
       </button>
     ));

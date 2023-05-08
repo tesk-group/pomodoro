@@ -10,7 +10,8 @@ export default function GuestLayout() {
     }
 
     return (
-        <div className="guest-flex"> 
+        <div className="guest_flex"> 
+            <p className="logo"> AgilePomodoro </p>
             <Outlet />
         </div>
     )
