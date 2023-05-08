@@ -5,7 +5,7 @@ The AgilePomodoro is a web-based tool that can be used to help you increase your
 - allows you to integrate with external issue tracking software to pull in your tasks
 - logs pomodoros for specific tasks
 - allows you to log distractions
-- stores statistics of your pomodoro usage that you can use to reflect and improve your time management skills
+- compiles statistics of your pomodoro usage that you can use to reflect and improve your time management skills
 
 ## Setup
 
