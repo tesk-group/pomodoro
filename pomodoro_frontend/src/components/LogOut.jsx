@@ -1,6 +1,9 @@
 import { useStateContext } from "../context/ContextProvider";
 import { useState, useEffect } from "react";
 import axios from "../axios";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUser } from "@fortawesome/free-solid-svg-icons";
+
 
 export const LogOut = () => { 
 
@@ -51,7 +54,10 @@ export const LogOut = () => {
   return(
     <>
       <div className="log_out">
-        {user && <p className="username"> UserName: {user}</p>}
+        {user && <p className="username">
+          <FontAwesomeIcon icon={faUser} size="1x" className="user_icon"/> 
+          {user}
+        </p>}
         <button onClick={logOut}>Log Out</button> 
       </div>
     </>

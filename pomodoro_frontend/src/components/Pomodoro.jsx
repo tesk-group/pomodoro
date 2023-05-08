@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlay, faPause } from "@fortawesome/free-solid-svg-icons";
@@ -15,45 +16,44 @@ export function Pomodoro(props) {
 
   useEffect(() => {
     let interval = null;
-
+  
     if (!isPaused) {
       interval = setInterval(() => {
-        clearInterval(interval);
-
         if (seconds === 0) {
           if (minutes !== 0) {
             setSeconds(59);
             setMinutes(minutes - 1);
           } else {
-            let minutes = displayMessage ? 50 : 5;
-            let seconds = 0;
-
-            setSeconds(seconds);
-            setMinutes(minutes);
-            setDisplayMessage(!displayMessage);
-            if (minutes === 50) {
-              setIsPaused(true);
+            let nextMinutes = 0;
+            let nextSeconds = 0;
+            let nextTaskType = '';
+  
+            if (taskType === "pomodoro") {
+              nextMinutes = 5;
+              nextTaskType = "break";
+            } else {
+              nextMinutes = 25;
+              nextTaskType = "pomodoro";
             }
+  
+            setSeconds(nextSeconds);
+            setMinutes(nextMinutes);
+            setDisplayMessage(!displayMessage);
+            setTaskType(nextTaskType);
+            if(taskType === "pomodoro") {
+              alert("Countdown Complete");
+            }
+            setIsPaused(taskType === "break");
           }
         } else {
           setSeconds(seconds - 1);
         }
       }, 1000);
-
-      if (minutes === 0 && seconds === 0) {
-        if (taskType === "pomodoro") {
-          alert("Countdown Complete");
-          setDuration(1500);
-          setTaskType("break");
-        } else {
-          setTaskType("pomodoro");
-        }
-        setPauseReason("");
-      }
     }
-
+  
     return () => clearInterval(interval);
-  }, [seconds, isPaused]);
+  }, [seconds, isPaused, taskType, displayMessage]);
+  
 
   const timerMinutes = minutes < 10 ? `0${minutes}` : minutes;
   const timerSeconds = seconds < 10 ? `0${seconds}` : seconds;
@@ -190,16 +190,18 @@ export function Pomodoro(props) {
 
   return (
     <div className="pomodoro">
-      <div className={isPaused ? "timer_play" : "timer_pause"}>
-      <div className="timer_time_total"> {pomodoroDuration/60} Minute Timer</div>
-        <FontAwesomeIcon 
-          icon={isPaused ? faPlay : faPause}
-          className="play"
-          onClick={handlePlayPauseClick}
-          size="10x"
-        />
-        <div className="timer_time">
-            {timerMinutes}:{timerSeconds} 
+      <div className={isPaused ? "timer_circle_pause": "timer_circle_play"}>
+        <div className={isPaused ? "timer_play" : "timer_pause"} >
+        <div className="timer_time_total"> {pomodoroDuration/60} Minute Timer</div>
+          <FontAwesomeIcon 
+            icon={isPaused ? faPlay : faPause}
+            className="play"
+            onClick={handlePlayPauseClick}
+            size="10x"
+          />
+          <div className="timer_time">
+              {timerMinutes}:{timerSeconds} 
+          </div>
         </div>
       </div>
       <div className="timer_buttons">
@@ -209,3 +211,4 @@ export function Pomodoro(props) {
     </div>
   );
 }
+
