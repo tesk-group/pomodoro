@@ -18,9 +18,8 @@
   font-style: italic;
   font-weight: 900;
   font-size: 6vh;
-  margin-bottom: 2vh;
+  margin-bottom: 8vh;
   margin-top: 2vh;
-  position: fixed;
   top: 3vh;
 }
 
@@ -118,6 +117,11 @@ button {
   align-items: space;
   justify-content: space-between;
   flex-direction: column;
+  margin-right: 1.5vh;
+}
+
+.log_out button {
+  margin-top: 0;
 }
 
 .username {
@@ -129,7 +133,7 @@ button {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 10px;
+  margin-top: 1vh;
 }
 
 .cards {
@@ -203,6 +207,10 @@ button {
   font-size: 2em;
 }
 
+.timer_time_total {
+  font-weight: bold;
+}
+
 
 .timer_play {
   padding: 30px;
@@ -223,7 +231,7 @@ button {
   
 .timer_pause {
   padding: 30px;
-  background-color:#CEE5D0;
+  background-color:#94B49F;
   z-index: 4;
   border-radius: 50%;
   text-align: center;
@@ -286,4 +294,67 @@ button {
 #overall_view {
   color: black;
   text-align: center;
+}
+
+.user_icon {
+  margin-right: 8px;
+}
+
+.timer_circle_play {
+  padding: 16px 24px;
+  position: relative;
+  border-radius: 90px;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.01);
+  width: auto;
+  height: auto;
+}
+.timer_circle_play::after {
+  position: absolute;
+  content: "";
+  top: 15px;
+  left: 0;
+  right: 0;
+  z-index: -1;
+  height: 100%;
+  width: 100%;
+  border-radius: 50%;
+  transform: scale(0.88) translateZ(0);
+  filter: blur(15px);
+  background: linear-gradient(to left, #ff5770, #e4428d, #c42da8, #9e16c3, #7001DE, #9e16c3, #c42da8, #e4428d, #ff5770);
+  background-size: 200% 200%;
+  animation: animateGlow 1.25s linear infinite;
+}
+@keyframes animateGlow {
+  0% {
+    background-position: 0% 50%;
+ }
+  100% {
+    background-position: 200% 50%;
+ }
+}
+
+.timer_circle_pause {
+  padding: 16px 24px;
+  position: relative;
+  border-radius: 90px;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.01);
+  width: auto;
+  height: auto;
+}
+
+.timer_circle_pause::after {
+  position: absolute;
+  content: "";
+  top: 15px;
+  left: 0;
+  right: 0;
+  z-index: -1;
+  height: 100%;
+  width: 100%;
+  border-radius: 50%;
+  transform: scale(0.88) translateZ(0);
+  filter: blur(15px);
+  background: linear-gradient(to left, #FCC0D0, #FAB6C8, #F499B2);
+  background-size: 200% 200%;
+  animation: animateGlow 10.25s linear infinite;
 }
