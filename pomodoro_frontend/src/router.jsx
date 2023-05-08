@@ -1,8 +1,7 @@
 import { createBrowserRouter, Navigate } from "react-router-dom";
 import { LogIn } from "./containers/LogIn";
 import { Register } from "./containers/Register";
-import { Dashboard } from "./containers/Dashboard";
-import { Statistics } from "./containers/Statistics";
+import Statistics from "./containers/Statistics";
 import GuestLayout from "./containers/GuestLayout";
 import MemberLayout from "./containers/MemberLayout";
 
@@ -17,7 +16,7 @@ const router = createBrowserRouter([
             },
             {
                 path: "/",
-                element: <Dashboard />
+                element: <MemberLayout />
             },
             {
                 path: 'statistics',

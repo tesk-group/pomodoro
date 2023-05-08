@@ -51,7 +51,7 @@ export const TrelloConnect = () => {
   return (
     <>
       {!connected && (
-        <button onClick={connectTrello}> Connect Your Trello Account </button>
+        <button className="trello_connect" onClick={connectTrello}> Connect Your Trello Account </button>
       )}
     </>
   );

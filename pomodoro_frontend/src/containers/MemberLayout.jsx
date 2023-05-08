@@ -1,10 +1,10 @@
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import { Sidebar } from '../components/Sidebar';
 import { useStateContext } from "../context/ContextProvider";
-import { UserMenu } from "../components/UserDropdown";
 import { Pomodoro } from "../components/Pomodoro"; 
-import { useEffect, useState, createContext } from "react";
-import { Statistics } from "./Statistics";
+import { useEffect, useState } from "react";
+import Statistics from "./Statistics";
+import { LogOut } from "../components/LogOut";
 
 export default function MemberLayout() {
   const [pomodoroDuration, setDuration] = useState({});
@@ -31,7 +31,7 @@ export default function MemberLayout() {
   return (
     <div>
         <p className="logo"> AgilePomodoro </p>
-        <UserMenu />
+        <LogOut />
         <div className="App" id="outer_container">
         {showSidebarAndPomodoro && (
           <Sidebar

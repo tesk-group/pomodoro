@@ -230,17 +230,18 @@ filter: drop-shadow(0px 5px 4px black);
   align-self: auto;
 }
 
+
+.canvas_chart {
+  width: 50vh;
+  height: 30vh;
+}
+
 .chart_container {
   background: #CEE5D0;
   opacity: 90%;
-  border-radius: 12%;
+  border-radius: 10%;
   height: auto;
   width: auto;
-}
-
-.canvas_chart {
-  width: 30vh;
-  height: 30vh;
 }
 
 .chart_keys {
@@ -260,4 +261,13 @@ filter: drop-shadow(0px 5px 4px black);
   justify-content: center;
   align-items: center;
   flex-direction: column;
+}
+
+.chart_header {
+  font-size: 4vh;
+}
+ 
+#overall_view {
+  color: black;
+  text-align: center;
 }
